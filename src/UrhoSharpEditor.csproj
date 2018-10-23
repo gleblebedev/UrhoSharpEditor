@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>VisualStudio\bin\Debug\netstandard2.0\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>VisualStudio\bin\Release\netstandard2.0\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Compile Remove="VisualStudio\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="VisualStudio\**" />
+    <None Remove="Data\**" />
+    <None Remove="VisualStudio\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="editorlayout.json" />
+    <None Remove="urhosharp.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="UrhoSharp" Version="1.8.91" />
+  </ItemGroup>
+
+</Project>

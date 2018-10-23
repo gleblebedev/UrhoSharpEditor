@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<?define ProductName="UrhoSharpEditor" ?>
+<?define ProductVersion="!(bind.FileVersion.File_Executable)" ?>
+
+<?if $(var.Platform) = x64 ?>
+<?define ProductDisplayName = "$(var.ProductName) 64-bit" ?>
+<?define ProductUpgradeCode = "{952C38F5-0471-4B69-8AAA-1D4E7CF09D70}" ?>
+<?define Win64 = "yes" ?>
+<?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+<?else ?>
+<?define ProductDisplayName = "$(var.ProductName)" ?>
+<?define ProductUpgradeCode = "{952C38F5-0471-4B69-8AAA-1D4E7CF09D70}" ?>
+<?define Win64 = "no" ?>
+<?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+<?endif ?>
+	<Product 
+		Id="*" 
+		Name="$(var.ProductDisplayName) v$(var.ProductVersion)"
+		Language="1033" 
+		Version="$(var.ProductVersion)"
+		Manufacturer="UrhoSharpEditor" 
+		UpgradeCode="$(var.ProductUpgradeCode)">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Comments="Windows Installer Package" Description="$(var.ProductDisplayName) v$(var.ProductVersion)"/>
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of UrhoSharpEditor is already installed." />
+		<MediaTemplate EmbedCab="yes"/>
+
+		<Feature Id="ProductFeature" Title="UrhoSharpEditor" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+
+		<Property Id="ARPNOMODIFY">1</Property>
+		<Property Id="ARPPRODUCTICON" Value="$(var.UrhoSharpEditor.WinForms.TargetName).exe" />
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="$(var.PlatformProgramFilesFolder)">
+				<Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" >
+<Directory Id="INSTALLFOLDER_DATA" Name="Data"><Directory Id="INSTALLFOLDER_DATA_MATERIALS" Name="Materials"></Directory><Directory Id="INSTALLFOLDER_DATA_MODELS" Name="Models"></Directory><Directory Id="INSTALLFOLDER_DATA_SCENES" Name="Scenes"></Directory><Directory Id="INSTALLFOLDER_DATA_UI" Name="UI"></Directory></Directory>    			</Directory>
+			</Directory>
+			<Directory Id="ProgramMenuFolder" />
+			</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" >
+      <Component Id="ProductComponent" Win64="$(var.Win64)" Directory="INSTALLFOLDER">
+        <File Id="File_Executable" Source="$(var.UrhoSharpEditor.WinForms.TargetPath)" />
+        <Shortcut Id="ApplicationStartMenuShortcut" Advertise="yes" Name="UrhoSharpEditor" Directory="ProgramMenuFolder"
+			WorkingDirectory="INSTALLFOLDER" Icon="$(var.UrhoSharpEditor.WinForms.TargetName).exe" IconIndex="0">
+				<Icon Id="$(var.UrhoSharpEditor.WinForms.TargetName).exe" SourceFile="$(var.UrhoSharpEditor.WinForms.TargetPath)" />
+			</Shortcut>
+      </Component>
+      <Component Id="CoreDataProductComponent"  Win64="$(var.Win64)" Directory="INSTALLFOLDER">
+        <File Source="$(var.UrhoSharpEditor.WinForms.TargetDir)CoreData.pak" />
+      </Component>
+      <Component Id="libmonoProductComponent"  Win64="$(var.Win64)" Directory="INSTALLFOLDER">
+        <File Source="$(var.UrhoSharpEditor.WinForms.TargetDir)libmono-urho.dylib" />
+      </Component>
+      <Component Id="monourhoProductComponent"  Win64="$(var.Win64)" Directory="INSTALLFOLDER">
+        <File Source="$(var.UrhoSharpEditor.WinForms.TargetDir)mono-urho.dll" />
+      </Component>
+      <Component Id="monourho_32bitProductComponent"  Win64="$(var.Win64)" Directory="INSTALLFOLDER">
+        <File Source="$(var.UrhoSharpEditor.WinForms.TargetDir)mono-urho_32bit.dll" />
+      </Component>
+      <Component Id="LibProductComponent"  Win64="$(var.Win64)" Directory="INSTALLFOLDER">
+        <File Source="$(var.UrhoSharpEditor.WinForms.TargetDir)UrhoSharpEditor.dll" />
+      </Component>
+      <Component Id="UrhoProductComponent"  Win64="$(var.Win64)" Directory="INSTALLFOLDER">
+        <File Source="$(var.UrhoSharpEditor.WinForms.TargetDir)Urho.dll" />
+      </Component>
+	
+      <Component Id="ProductComponent_Data_Materials_Default.xml"  Win64="$(var.Win64)" Directory="INSTALLFOLDER_DATA_MATERIALS">
+        <File Id="File_Data_Materials_Default.xml" Source="$(var.UrhoSharpEditor.WinForms.TargetDir)Data\Materials\Default.xml" />
+      </Component>
+	
+      <Component Id="ProductComponent_Data_Models_Box.mdl"  Win64="$(var.Win64)" Directory="INSTALLFOLDER_DATA_MODELS">
+        <File Id="File_Data_Models_Box.mdl" Source="$(var.UrhoSharpEditor.WinForms.TargetDir)Data\Models\Box.mdl" />
+      </Component>
+	
+      <Component Id="ProductComponent_Data_Models_Plane.mdl"  Win64="$(var.Win64)" Directory="INSTALLFOLDER_DATA_MODELS">
+        <File Id="File_Data_Models_Plane.mdl" Source="$(var.UrhoSharpEditor.WinForms.TargetDir)Data\Models\Plane.mdl" />
+      </Component>
+	
+      <Component Id="ProductComponent_Data_Scenes_Scene.xml"  Win64="$(var.Win64)" Directory="INSTALLFOLDER_DATA_SCENES">
+        <File Id="File_Data_Scenes_Scene.xml" Source="$(var.UrhoSharpEditor.WinForms.TargetDir)Data\Scenes\Scene.xml" />
+      </Component>
+	
+      <Component Id="ProductComponent_Data_UI_DefaultStyle.xml"  Win64="$(var.Win64)" Directory="INSTALLFOLDER_DATA_UI">
+        <File Id="File_Data_UI_DefaultStyle.xml" Source="$(var.UrhoSharpEditor.WinForms.TargetDir)Data\UI\DefaultStyle.xml" />
+      </Component>
+	
+      <Component Id="ProductComponent_Data_UI_ScreenJoystick.xml"  Win64="$(var.Win64)" Directory="INSTALLFOLDER_DATA_UI">
+        <File Id="File_Data_UI_ScreenJoystick.xml" Source="$(var.UrhoSharpEditor.WinForms.TargetDir)Data\UI\ScreenJoystick.xml" />
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
